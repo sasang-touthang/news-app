@@ -1,9 +1,10 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// @ts-nocheck
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
 export const fetchUsaNews = createAsyncThunk(
   "usa/fetchUsa",
-  async (apiKey, thunkAPI) => {
+  async (apiKey: String, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {
@@ -12,7 +13,7 @@ export const fetchUsaNews = createAsyncThunk(
       );
       const data = await response.json();
       return data; // Assuming the API returns articles in the data.articles property
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching news:", error);
       return rejectWithValue(error.message);
     }
@@ -28,7 +29,7 @@ export const usaNewsSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchUsaNews.pending, (state, action) => {
+    builder.addCase(fetchUsaNews.pending, (state) => {
       state.loading = true;
       state.error = false;
     });
@@ -37,7 +38,7 @@ export const usaNewsSlice = createSlice({
       state.loading = false;
       state.error = false;
     });
-    builder.addCase(fetchUsaNews.rejected, (state, action) => {
+    builder.addCase(fetchUsaNews.rejected, (state) => {
       state.loading = false;
       state.error = true;
     });

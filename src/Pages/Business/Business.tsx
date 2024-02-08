@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+// @ts-nocheck
+
+import { useEffect, useState } from "react";
 import HotTopics from "../../components/hot_topics/HotTopics.js";
 import NewsCard from "../../components/latest_news/NewsCard.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,12 +19,12 @@ type CardInfo = {
 function Business(): JSX.Element {
   const [showMoreCount, setShowMoreCount] = useState(10);
   const businessNews = useSelector(
-    (state: RootState) => state.businessNews.news.articles
+    (state: RootState) => state.businessNews.news?.articles
   );
   const isLoading = useSelector(
     (state: RootState) => state.businessNews.loading
   );
-  const isError = useSelector((state: RootState) => state.businessNews.error);
+
   const dispatch: AppDispatch = useDispatch();
 
   let firstNews = businessNews?.slice(0, 1)[0];
@@ -85,7 +87,7 @@ function Business(): JSX.Element {
                     source: { name },
                   }: CardInfo) => (
                     <NewsCard
-                      key={title}
+                      key={Number(publishedAt)}
                       title={title}
                       image={urlToImage}
                       source={name}

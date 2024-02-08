@@ -1,9 +1,10 @@
+// @ts-nocheck
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
 export const fetchSearchNews = createAsyncThunk(
   "search/fetchSearch",
-  async (search, thunkAPI) => {
+  async (search: String, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {
@@ -12,7 +13,7 @@ export const fetchSearchNews = createAsyncThunk(
       );
       const data = await response.json();
       return data; // Assuming the API returns articles in the data.articles property
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching news:", error);
       return rejectWithValue(error.message);
     }

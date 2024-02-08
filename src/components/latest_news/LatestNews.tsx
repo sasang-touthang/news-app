@@ -1,12 +1,11 @@
-import React from "react";
-import NewsCard from "./NewsCard";
+// import NewsCard from "./NewsCard";
 
-function LatestNews() {
-  return (
-    <div>
-      <NewsCard />
-    </div>
-  );
-}
+// function LatestNews() {
+//   return (
+//     <div>
+//       <NewsCard />
+//     </div>
+//   );
+// }
 
-export default LatestNews;
+// export default LatestNews;

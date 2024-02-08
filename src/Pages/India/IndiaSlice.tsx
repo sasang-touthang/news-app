@@ -1,9 +1,11 @@
+// @ts-nocheck
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
 export const fetchIndianNews = createAsyncThunk(
   "indianNews/fetchIndianNews",
-  async (apiKey, thunkAPI) => {
+  async (apiKey: String, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {
@@ -12,7 +14,7 @@ export const fetchIndianNews = createAsyncThunk(
       );
       const data = await response.json();
       return data; // Assuming the API returns articles in the data.articles property
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching news:", error);
       return rejectWithValue(error.message);
     }

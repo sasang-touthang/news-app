@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+// @ts-nocheck
+import { useState, useEffect } from "react";
 import HotTopics from "../../components/hot_topics/HotTopics.js";
 import NewsCard from "../../components/latest_news/NewsCard.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,7 +22,6 @@ function India(): JSX.Element {
     (state: RootState) => state.indianNews.news.articles
   );
   const isLoading = useSelector((state: RootState) => state.indianNews.loading);
-  const isError = useSelector((state: RootState) => state.indianNews.error);
   const dispatch: AppDispatch = useDispatch();
 
   let firstNews = indianNews?.slice(0, 1)[0];

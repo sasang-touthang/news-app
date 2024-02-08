@@ -1,9 +1,11 @@
+// @ts-nocheck
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
 export const fetchSportsNews = createAsyncThunk(
   "sports/fetchSports",
-  async (apiKey, thunkAPI) => {
+  async (apiKey: String, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {

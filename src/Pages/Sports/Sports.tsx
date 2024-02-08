@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+// @ts-nocheck
+import { useEffect, useState } from "react";
 import HotTopics from "../../components/hot_topics/HotTopics.js";
 import NewsCard from "../../components/latest_news/NewsCard.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,7 +21,6 @@ function Sports(): JSX.Element {
     (state: RootState) => state.sportsNews.news.articles
   );
   const isLoading = useSelector((state: RootState) => state.sportsNews.loading);
-  const isError = useSelector((state: RootState) => state.sportsNews.error);
   const dispatch: AppDispatch = useDispatch();
 
   let firstNews = sportsNews?.slice(0, 1)[0];

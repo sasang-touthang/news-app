@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import search from "./media/search.png";
-import burger from "./media/burger.png";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoMdMenu } from "react-icons/io";
 
