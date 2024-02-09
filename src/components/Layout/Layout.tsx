@@ -4,7 +4,7 @@ import Footer from "./Footer";
 
 function Layout(): JSX.Element {
   return (
-    <div className="max-w-[90rem] m-auto">
+    <div className="max-w-[90rem] bg-white m-auto">
       <Navigation />
       <div>{<Outlet />}</div>
       <Footer />
