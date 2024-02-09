@@ -1,4 +1,5 @@
 // @ts-nocheck
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -6,14 +7,18 @@ export const fetchSearchNews = createAsyncThunk(
   "search/fetchSearch",
   async (search: String, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
+    const apikey = "3ea75eec3ccba98cebfd542f4a88b5db";
+    const url =
+      "https://gnews.io/api/v4/search?q=" +
+      search +
+      "&lang=en&country=us&max=10&apikey=" +
+      apikey;
 
     try {
-      const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${search}&apiKey=7363efcded9848a9868c1228f623bbca`
-      );
-      const data = await response.json();
-      return data; // Assuming the API returns articles in the data.articles property
-    } catch (error: any) {
+      const response = await fetch(url);
+      const result = await response.json();
+      return result; // Assuming the API returns articles in the data.articles property
+    } catch (error) {
       console.error("Error fetching news:", error);
       return rejectWithValue(error.message);
     }

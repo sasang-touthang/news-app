@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import { useEffect, useState } from "react";
 import HotTopics from "../../components/hot_topics/HotTopics.js";
 import NewsCard from "../../components/latest_news/NewsCard.js";
@@ -17,21 +16,19 @@ type CardInfo = {
 };
 
 function Entertainment(): JSX.Element {
-  const [showMoreCount, setShowMoreCount] = useState(10);
-  const entertainmentNews = useSelector(
+  const [showMoreCount, setShowMoreCount] = useState(5);
+  const EntertainmentNews = useSelector(
     (state: RootState) => state.entertainmentNews.news.articles
   );
   const isLoading = useSelector(
     (state: RootState) => state.entertainmentNews.loading
   );
-
   const dispatch: AppDispatch = useDispatch();
 
-  let firstNews = entertainmentNews?.slice(0, 1)[0];
+  let firstNews = EntertainmentNews?.slice(0, 1)[0];
 
   useEffect(() => {
-    dispatch(fetchEntertainmentNews("7363efcded9848a9868c1228f623bbca"));
-    console.log(entertainmentNews);
+    dispatch(fetchEntertainmentNews());
   }, []);
 
   return (
@@ -50,7 +47,7 @@ function Entertainment(): JSX.Element {
                   <div className="relative">
                     <img
                       className="w-full rounded-md object-cover"
-                      src={firstNews?.urlToImage}
+                      src={firstNews?.image}
                     />
                     <div className="absolute top-[45%] md:top-[50%] left-[38%] translate-y-[-50%] translate-x-[-50%] leading-relaxed bottom-0 text-white">
                       <span className="font_playfair text-[1.1rem] md:text-[2.2rem] weight-bold drop-shadow-xl">
@@ -76,29 +73,30 @@ function Entertainment(): JSX.Element {
         ) : (
           <div className="pb-10">
             <div className="grid grid-cols-2 xl:grid-cols-4 md:grid-cols-3 gap-4 xl:gap-2 ">
-              {entertainmentNews
-                ?.slice(0, showMoreCount)
-                ?.map(
-                  ({
+              {EntertainmentNews?.slice(0, showMoreCount)?.map(
+                (
+                  {
                     publishedAt,
                     title,
-                    urlToImage,
+                    image,
                     url,
                     source: { name },
-                  }: CardInfo) => (
-                    <NewsCard
-                      key={title}
-                      title={title}
-                      image={urlToImage}
-                      source={name}
-                      url={url}
-                      publishedAt={publishedAt}
-                    />
-                  )
-                )}
+                  }: CardInfo,
+                  index
+                ) => (
+                  <NewsCard
+                    key={index}
+                    title={title}
+                    image={image}
+                    source={name}
+                    url={url}
+                    publishedAt={publishedAt}
+                  />
+                )
+              )}
             </div>
             <div className="flex justify-center ">
-              {entertainmentNews?.length < showMoreCount ? (
+              {EntertainmentNews?.length < showMoreCount ? (
                 <h1 className="text-gray-500">No more to show</h1>
               ) : (
                 <button

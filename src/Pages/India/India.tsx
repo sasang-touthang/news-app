@@ -1,12 +1,11 @@
 // @ts-nocheck
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import HotTopics from "../../components/hot_topics/HotTopics.js";
 import NewsCard from "../../components/latest_news/NewsCard.js";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchIndianNews } from "./IndiaSlice";
 import { RootState, AppDispatch } from "../../store/store";
 import { MoonLoader } from "react-spinners";
-import noImage from "./noImage.jpeg";
 
 type CardInfo = {
   title: String;
@@ -17,9 +16,9 @@ type CardInfo = {
 };
 
 function India(): JSX.Element {
-  const [showMoreCount, setShowMoreCount] = useState(10);
+  const [showMoreCount, setShowMoreCount] = useState(5);
   const indianNews = useSelector(
-    (state: RootState) => state.indianNews.news.articles
+    (state: RootState) => state.indianNews.news?.articles
   );
   const isLoading = useSelector((state: RootState) => state.indianNews.loading);
   const dispatch: AppDispatch = useDispatch();
@@ -27,7 +26,7 @@ function India(): JSX.Element {
   let firstNews = indianNews?.slice(0, 1)[0];
 
   useEffect(() => {
-    dispatch(fetchIndianNews("7363efcded9848a9868c1228f623bbca"));
+    dispatch(fetchIndianNews());
     console.log(indianNews);
   }, []);
 
@@ -47,9 +46,7 @@ function India(): JSX.Element {
                   <div className="relative">
                     <img
                       className="w-full rounded-md object-cover"
-                      src={
-                        firstNews?.urlToImage ? firstNews?.urlToImage : noImage
-                      }
+                      src={firstNews?.image}
                     />
                     <div className="absolute top-[45%] md:top-[50%] left-[38%] translate-y-[-50%] translate-x-[-50%] leading-relaxed bottom-0 text-white">
                       <span className="font_playfair text-[1.1rem] md:text-[2.2rem] weight-bold drop-shadow-xl">
@@ -78,17 +75,20 @@ function India(): JSX.Element {
               {indianNews
                 ?.slice(0, showMoreCount)
                 ?.map(
-                  ({
-                    publishedAt,
-                    title,
-                    urlToImage,
-                    url,
-                    source: { name },
-                  }: CardInfo) => (
+                  (
+                    {
+                      publishedAt,
+                      title,
+                      image,
+                      url,
+                      source: { name },
+                    }: CardInfo,
+                    index
+                  ) => (
                     <NewsCard
-                      key={title}
+                      key={index}
                       title={title}
-                      image={urlToImage}
+                      image={image}
                       source={name}
                       url={url}
                       publishedAt={publishedAt}

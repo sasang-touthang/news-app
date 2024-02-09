@@ -1,19 +1,25 @@
 // @ts-nocheck
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import type { PayloadAction } from "@reduxjs/toolkit";
 
-export const fetchUsaNews = createAsyncThunk(
-  "usa/fetchUsa",
-  async (apiKey: String, thunkAPI) => {
+export const fetchUSANews = createAsyncThunk(
+  "usa/fetchUSA",
+  async (arg, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
+    const apikey = "3ea75eec3ccba98cebfd542f4a88b5db";
+    const category = "general";
+    const url =
+      "https://gnews.io/api/v4/top-headlines?category=" +
+      category +
+      "&lang=en&country=us&max=10&apikey=" +
+      apikey;
 
     try {
-      const response = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
-      );
-      const data = await response.json();
-      return data; // Assuming the API returns articles in the data.articles property
-    } catch (error: any) {
+      const response = await fetch(url);
+      const result = await response.json();
+      return result; // Assuming the API returns articles in the data.articles property
+    } catch (error) {
       console.error("Error fetching news:", error);
       return rejectWithValue(error.message);
     }
@@ -29,16 +35,16 @@ export const usaNewsSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchUsaNews.pending, (state) => {
+    builder.addCase(fetchUSANews.pending, (state, action) => {
       state.loading = true;
       state.error = false;
     });
-    builder.addCase(fetchUsaNews.fulfilled, (state, action) => {
+    builder.addCase(fetchUSANews.fulfilled, (state, action) => {
       state.news = action.payload;
       state.loading = false;
       state.error = false;
     });
-    builder.addCase(fetchUsaNews.rejected, (state) => {
+    builder.addCase(fetchUSANews.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
     });

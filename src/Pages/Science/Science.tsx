@@ -16,21 +16,19 @@ type CardInfo = {
 };
 
 function Science(): JSX.Element {
-  const [showMoreCount, setShowMoreCount] = useState(10);
+  const [showMoreCount, setShowMoreCount] = useState(5);
   const scienceNews = useSelector(
     (state: RootState) => state.scienceNews.news.articles
   );
   const isLoading = useSelector(
     (state: RootState) => state.scienceNews.loading
   );
-
   const dispatch: AppDispatch = useDispatch();
 
   let firstNews = scienceNews?.slice(0, 1)[0];
 
   useEffect(() => {
-    dispatch(fetchScienceNews("7363efcded9848a9868c1228f623bbca"));
-    console.log(scienceNews);
+    dispatch(fetchScienceNews());
   }, []);
 
   return (
@@ -49,7 +47,7 @@ function Science(): JSX.Element {
                   <div className="relative">
                     <img
                       className="w-full rounded-md object-cover"
-                      src={firstNews?.urlToImage}
+                      src={firstNews?.image}
                     />
                     <div className="absolute top-[45%] md:top-[50%] left-[38%] translate-y-[-50%] translate-x-[-50%] leading-relaxed bottom-0 text-white">
                       <span className="font_playfair text-[1.1rem] md:text-[2.2rem] weight-bold drop-shadow-xl">
@@ -78,17 +76,20 @@ function Science(): JSX.Element {
               {scienceNews
                 ?.slice(0, showMoreCount)
                 ?.map(
-                  ({
-                    publishedAt,
-                    title,
-                    urlToImage,
-                    url,
-                    source: { name },
-                  }: CardInfo) => (
+                  (
+                    {
+                      publishedAt,
+                      title,
+                      image,
+                      url,
+                      source: { name },
+                    }: CardInfo,
+                    index
+                  ) => (
                     <NewsCard
-                      key={title}
+                      key={index}
                       title={title}
-                      image={urlToImage}
+                      image={image}
                       source={name}
                       url={url}
                       publishedAt={publishedAt}

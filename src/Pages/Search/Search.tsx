@@ -21,7 +21,7 @@ function Search() {
 
   function searchHandler() {
     dispatch(fetchSearchNews(searchWord));
-    console.log(searchWord);
+    setSearchWord("");
   }
 
   return (
@@ -47,19 +47,16 @@ function Search() {
         ) : (
           <div className="grid grid-cols-2 xl:grid-cols-4 md:grid-cols-3 gap-4 xl:gap-2 ">
             {searchNews.news.articles?.map(
-              ({
-                publishedAt,
-                title,
-                urlToImage,
-                source: { name },
-                url,
-              }: CardInfo) => (
+              (
+                { publishedAt, title, image, url, source: { name } }: CardInfo,
+                index
+              ) => (
                 <NewsCard
-                  key={title}
-                  url={url}
+                  key={index}
                   title={title}
-                  image={urlToImage}
+                  image={image}
                   source={name}
+                  url={url}
                   publishedAt={publishedAt}
                 />
               )
